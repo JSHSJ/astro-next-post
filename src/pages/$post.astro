@@ -1,0 +1,97 @@
+---
+export async function createCollection() {
+
+  const blogPosts = Astro.fetchContent("../content/blog/*md");
+  const sortedPosts = blogPosts.sort((a,b) => {
+    if (a.title < b.title) {
+      return -1
+    }
+    if (a.title > b.title) {
+      return 1
+    }
+    return 0
+  })
+
+  return {
+    route: `/post/:slug`,
+    paths() {
+      return sortedPosts.map(p => ({
+        params: {
+          slug: p.slug
+        }
+      }))
+    },
+    async props({ params }) {
+      const currentIndex = sortedPosts.findIndex(p => p.slug === params.slug);
+      const currentPost = sortedPosts[currentIndex];
+      const nextIndex = currentIndex === sortedPosts.length - 1 ? null : currentIndex + 1;
+      const nextPost = nextIndex ? sortedPosts[nextIndex] : null
+      const prevIndex = currentIndex === 0 ? null : currentIndex - 1;
+      const prevPost = typeof prevIndex !== null ? sortedPosts[prevIndex] : null
+
+      console.log(currentIndex, sortedPosts[prevIndex])
+
+
+      return {
+        post: currentPost,
+        nextPost,
+        prevPost
+      }
+    }
+  }
+}
+
+const {post, nextPost, prevPost} = Astro.props;
+---
+
+<style lang="scss">
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  width: 100%;
+
+  gap: 1rem;
+}
+
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/style/global.css">
+    <link rel="stylesheet" href="/style/home.css">
+
+    <style>
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            max-width: min(100%, 68ch);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <div>
+                <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo">
+                <h1>Welcome to <a href="https://astro.build/">Astro</a></h1>
+            </div>
+        </header>
+
+        <section>
+          <h1>{post.title}</h1>
+
+          <div class="cluster">
+
+          {prevPost && <a href={`/post/${prevPost.slug}`}>PREV: {prevPost.title}</a>}
+          {nextPost && <a href={`/post/${nextPost.slug}`}>NEXT: {nextPost.title}</a>}
+          </div>
+        </section>
+    </main>
+</body>
+</html>
