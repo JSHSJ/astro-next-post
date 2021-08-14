@@ -1,6 +1,6 @@
 ---
-export async function createCollection() {
-  const blogPosts = Astro.fetchContent("../content/blog/*md");
+export async function getStaticPaths({paginate }) {
+  const blogPosts = Astro.fetchContent("../../content/blog/*md");
   const sortedPosts = blogPosts.sort((a,b) => {
     if (a.title < b.title) {
       return -1
@@ -11,18 +11,12 @@ export async function createCollection() {
     return 0
   })
 
-  return {
-    paginate: true,
-    route: `/overview/:page?`,
-    async props({paginate}) {
-      return {
-        posts: paginate(sortedPosts, {pageSize: 10})
-      }
-    }
-  }
+  return paginate(sortedPosts, {
+    pageSize: 10,
+  })
 }
 
-const {posts} = Astro.props;
+const {page} = Astro.props;
 ---
 <style lang="scss">
 
@@ -66,9 +60,9 @@ section {
         </header>
 
         <section>
-          {posts.data.map(p => (
+          {page.data.map(p => (
             <article>
-              <a href={`/post/${p.slug}`}>{p.title}</a>
+              <a href={`/blog/post/${p.slug}`}>{p.title}</a>
             </article>
           ))}
         </section>

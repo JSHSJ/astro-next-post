@@ -1,7 +1,7 @@
 ---
-export async function createCollection() {
+export async function getStaticPaths() {
 
-  const blogPosts = Astro.fetchContent("../content/blog/*md");
+  const blogPosts = Astro.fetchContent("../../../content/blog/*md");
   const sortedPosts = blogPosts.sort((a,b) => {
     if (a.title < b.title) {
       return -1
@@ -12,33 +12,21 @@ export async function createCollection() {
     return 0
   })
 
-  return {
-    route: `/post/:slug`,
-    paths() {
-      return sortedPosts.map(p => ({
-        params: {
-          slug: p.slug
-        }
-      }))
-    },
-    async props({ params }) {
-      const currentIndex = sortedPosts.findIndex(p => p.slug === params.slug);
-      const currentPost = sortedPosts[currentIndex];
-      const nextIndex = currentIndex === sortedPosts.length - 1 ? null : currentIndex + 1;
-      const nextPost = nextIndex ? sortedPosts[nextIndex] : null
-      const prevIndex = currentIndex === 0 ? null : currentIndex - 1;
-      const prevPost = typeof prevIndex !== null ? sortedPosts[prevIndex] : null
+  return sortedPosts.map((currentPost, currentIndex) => {
+    const nextIndex = currentIndex === sortedPosts.length - 1 ? null : currentIndex + 1;
+    const nextPost = nextIndex ? sortedPosts[nextIndex] : null
+    const prevIndex = currentIndex === 0 ? null : currentIndex - 1;
+    const prevPost = typeof prevIndex !== null ? sortedPosts[prevIndex] : null
 
-      console.log(currentIndex, sortedPosts[prevIndex])
-
-
-      return {
+    return {
+      params: {postslug: currentPost.slug},
+      props: {
         post: currentPost,
         nextPost,
         prevPost
       }
     }
-  }
+  })
 }
 
 const {post, nextPost, prevPost} = Astro.props;
@@ -88,8 +76,8 @@ const {post, nextPost, prevPost} = Astro.props;
 
           <div class="cluster">
 
-          {prevPost && <a href={`/post/${prevPost.slug}`}>PREV: {prevPost.title}</a>}
-          {nextPost && <a href={`/post/${nextPost.slug}`}>NEXT: {nextPost.title}</a>}
+          {prevPost && <a href={`/blog/post/${prevPost.slug}`}>PREV: {prevPost.title}</a>}
+          {nextPost && <a href={`/blog/post/${nextPost.slug}`}>NEXT: {nextPost.title}</a>}
           </div>
         </section>
     </main>

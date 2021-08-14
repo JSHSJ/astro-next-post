@@ -1,10 +1,10 @@
 lockfileVersion: 5.3
 
 specifiers:
-  astro: ^0.18.9
+  astro: ^0.19.0-next.2
 
 devDependencies:
-  astro: 0.18.9
+  astro: 0.19.0-next.2
 
 packages:
 
@@ -87,8 +87,8 @@ packages:
       - typescript
     dev: true
 
-  /@astrojs/renderer-vue/0.1.6_rollup@2.56.2:
-    resolution: {integrity: sha512-jQXQbrGIvdB9LGK9DAkoKBV/Hr3ZoTvNQbKDZeSBvLZSCj3Z50AyIASflYCBVyhUmwSsw9ZhasqAMiizj1cCBA==}
+  /@astrojs/renderer-vue/0.1.7_rollup@2.56.2:
+    resolution: {integrity: sha512-nmMCsgkUy885P5Dv02Xhgl6jAd23lUuA44wxV1M0hqFIXETjBgV4h2swupr1XQ6f0drfdkXhCDPFjLzvdKsl7w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       '@snowpack/plugin-vue': 2.6.2_rollup@2.56.2
@@ -673,7 +673,7 @@ packages:
   /@types/acorn/4.0.6:
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
     dependencies:
-      '@types/estree': 0.0.48
+      '@types/estree': 0.0.50
     dev: true
 
   /@types/cacheable-request/6.0.2:
@@ -979,8 +979,8 @@ packages:
     hasBin: true
     dev: true
 
-  /astro/0.18.9:
-    resolution: {integrity: sha512-sReknFVWVZS/dZCitRl24Xb1BPEja6Lq/Gbli5xEx+/ac5I8H1Ie7uw4uodoOLXmM8Oe6zRDrpSJrZF89cTYxw==}
+  /astro/0.19.0-next.2:
+    resolution: {integrity: sha512-JNC5o/rZggnIGdj2IA1dYHuoHUT0UhRhWz+v3FpJxRHtnc3/GY5qM0Ley9qMUMvIFtvPLAo50FKptmt3rSq+Fg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -990,7 +990,7 @@ packages:
       '@astrojs/renderer-preact': 0.2.1_@babel+core@7.15.0
       '@astrojs/renderer-react': 0.2.0_@babel+core@7.15.0
       '@astrojs/renderer-svelte': 0.1.1_2a53b09ae1cc452a747a704caec64a35
-      '@astrojs/renderer-vue': 0.1.6_rollup@2.56.2
+      '@astrojs/renderer-vue': 0.1.7_rollup@2.56.2
       '@babel/code-frame': 7.14.5
       '@babel/core': 7.15.0
       '@babel/generator': 7.15.0
