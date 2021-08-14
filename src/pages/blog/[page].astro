@@ -1,4 +1,6 @@
 ---
+import Pagination from "../../components/Pagination.astro"
+
 export async function getStaticPaths({paginate }) {
   const blogPosts = Astro.fetchContent("../../content/blog/*md");
   const sortedPosts = blogPosts.sort((a,b) => {
@@ -12,7 +14,7 @@ export async function getStaticPaths({paginate }) {
   })
 
   return paginate(sortedPosts, {
-    pageSize: 10,
+    pageSize: 3,
   })
 }
 
@@ -65,6 +67,7 @@ section {
               <a href={`/blog/post/${p.slug}`}>{p.title}</a>
             </article>
           ))}
+          <Pagination current={page.currentPage} last={page.lastPage} next={page.url.next} prev={page.url.prev} basePath={"/blog"}></Pagination>
         </section>
     </main>
 </body>
